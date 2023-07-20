@@ -25,3 +25,20 @@ router.delete('/notes/:id', (req, res) => {
     res.sendStatus(200);
 });
 
+function getNotes() {
+    const notesData = fs.readFileSync(path.join(__dirname, '..', 'db', 'notes.json'), 'utf8');
+    return JSON.parse(notesData);
+}
+
+function saveNotes() {
+    const notesData = JSON.stringify(notes, null, 2);
+    fs.writeFileSync(path.join(__dirname, '..', 'db', 'notes.json'), notesData);
+}
+
+function generateNoteId(notes) {
+    const maxId = notes.reduce((max, note) => (note.id > max ? note.id : max), 0);
+    return maxId + 1;
+  }
+  
+  module.exports = router;
+
