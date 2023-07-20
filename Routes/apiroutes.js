@@ -17,3 +17,11 @@ router.post('/notes', (req, res) => {
     res.json(newNote);
 });
 
+router.delete('/notes/:id', (req, res) => {
+    const noteId = parseInt(req.params.id);
+    let notes = getNotes();
+    notes = notes.filter((note) => note.id !== noteId);
+    saveNotes(notes);
+    res.sendStatus(200);
+});
+
